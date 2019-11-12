@@ -1,20 +1,8 @@
 <?php
 
+require_once (__DIR__ . '/Table.php');
 
 class UsersTable extends Table
 {
-    private $db = null;
-
-    private $table = 'users';
-
-    public function __construct ($db)
-    {
-        $this->db = $db;
-    }
-
-    public function findAll ()
-    {
-        $pdo = $this->db->getPdo();
-        return $pdo->query(sprintf('SELECT * FROM %s', $this->table));
-    }
+    protected $table = 'users';
 }

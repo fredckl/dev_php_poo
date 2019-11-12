@@ -21,18 +21,18 @@ class Db
     private $password = null;
 
     /**
-     * Définition de la future instance PDO
-     **/
-    private $pdo = null;
-
+     * Db constructor.
+     * @param $dbname
+     * @param $user
+     * @param $password
+     * @param string $host
+     */
     public function __construct($dbname, $user, $password, $host = 'localhost')
     {
         $this->dbname = $dbname;
         $this->user = $user;
         $this->password = $password;
         $this->host = $host;
-
-
     }
 
     /**
@@ -40,8 +40,7 @@ class Db
      */
     public function getPdo ()
     {
-        $this->pdo = new PDO('mysql:host='. $this->host . ';dbname=' . $this->dbname , $this->user, $this->password);
-        return $this->pdo;
+        return new PDO('mysql:host='. $this->host . ';dbname=' . $this->dbname , $this->user, $this->password);
     }
 }
 

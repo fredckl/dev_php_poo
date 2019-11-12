@@ -108,12 +108,14 @@ class Db
      * Définition du mot de passe pour l'accès à la base de données
      **/
     private $password = null;
-    
-    /**
-     * Définition de la future instance PDO
-     **/
-    private $pdo = null;
 
+    /**
+     * Db constructor.
+     * @param $dbname
+     * @param $user
+     * @param $password
+     * @param string $host
+     */
     public function __construct($dbname, $user, $password, $host = 'localhost') 
     {
         $this->dbname = $dbname;
@@ -127,15 +129,14 @@ class Db
      */
     public function getPdo ()
     {
-        $this->pdo = new PDO('mysql:host='. $this->host . ';dbname=' . $this->dbname , $this->user, $this->password);
-        return $this->pdo; 
+        return new PDO('mysql:host='. $this->host . ';dbname=' . $this->dbname , $this->user, $this->password);
     }
 }
 
 ?>
 ```
 
-A ce stade, nous venons de créer une classe permettant de créer un nouvel objet PDO.
+A ce stade, nous venons de créer une classe permettant de créer un nouvel objet.
 Nous devons encore instancier celle si pour pouvoir l'utiliser, comme ceci.
 
 ```php
@@ -280,7 +281,6 @@ class Table
          */
         protected $table = null;
         
-        
         public function __construct($db) 
         {
             $this->db = $db;
@@ -294,6 +294,7 @@ class Table
 }
 ?>
 ```
+> N'oubliez pas de changer la visibilité des propriétés $db et $table, sans quoi vous aurez une erreur quand vous allez redéfinir le nom de la table. 
 
 Nous pouvons maintenant faire hériter nos classes UsersTable et AddressesTable de cette classe Table.
 Il nous restera à définir le nom de la table pour chaque classe.
@@ -317,8 +318,6 @@ Nous avons 2 classes qui héritent de la même classe Table. Celle-ci contient l
 Nous pouvons maitenant écrire du code spécifique pour les classe UsersTable et AddressesTable.  
 
 #### En conclusion
-Dans cette dernière partie, nous avons réaliser de l'héritage de classe qui nous ouvre encore le champ des possibles et continue de garder
+Dans cette dernière partie, nous avons réalisé de l'héritage de classe qui nous ouvre encore le champ des possibles et continue de garder
 un code propre et organisé. 
-
-
 

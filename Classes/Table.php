@@ -1,13 +1,18 @@
 <?php
 
+require_once (__DIR__ . '/Db.php');
 
 class Table
 {
     protected $db = null;
 
-    protected $table = 'addresses';
+    protected $table = null;
 
-    public function __construct ($db)
+    /**
+     * Table constructor.
+     * @param $db
+     */
+    public function __construct (Db $db)
     {
         $this->db = $db;
     }
