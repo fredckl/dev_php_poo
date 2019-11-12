@@ -218,7 +218,7 @@ foreach ($allUsers as $allUser) {
 ?>
 ```
 
-Vous devriez avoir le même résultat qu'auparavant mais nous pouvous constater que noter code est mieux organiser et plus simple à maintenir. 
+Vous devriez avoir le même résultat qu'auparavant mais nous pouvous constater que notre code est mieux organiser et plus simple à maintenir. 
 
 
 
