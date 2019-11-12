@@ -40,7 +40,8 @@ class Db
      */
     public function getPdo ()
     {
-        return new PDO('mysql:host='. $this->host . ';dbname=' . $this->dbname , $this->user, $this->password);
+        $this->pdo = new PDO('mysql:host='. $this->host . ';dbname=' . $this->dbname , $this->user, $this->password);
+        return $this->pdo;
     }
 }
 
