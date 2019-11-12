@@ -218,8 +218,107 @@ foreach ($allUsers as $allUser) {
 ?>
 ```
 
-Vous devriez avoir le même résultat qu'auparavant mais nous pouvous constater que notre code est mieux organiser et plus simple à maintenir. 
+Vous devriez avoir le même résultat qu'auparavant mais nous pouvons constater que notre code est mieux organiser et plus simple à maintenir.
 
+Allons plus loin, imaginons que nous ayons une table adresses. Nous devrions créer une nouvelle classe semblable à la classe UsersTable. 
+Il nous faudrait donc simplement changer la propriété $table pour quelle corresponde à notre table adresse.
+
+Essayons de la faire :
+```php
+<?php
+// ... code
+
+class AddressesTable
+{
+     /**
+         * Instance de la classe Db
+         */ 
+        private $db = null;
+        
+        /**
+         * Nom de la base de données
+         */
+        private $table = 'addresses';
+        
+        
+        public function __construct($db) 
+        {
+            $this->db = $db;
+        }
+    
+        public function findAll ()
+        {
+            $pdo = $this->db->getPdo();
+            return $pdo->query(sprintf("SELECT * FROM %s", $this->table));
+        }
+}
+
+?>
+```
+
+Nous pourrions tester cette nouvelle classe pour voir si tout fonctionne correctement.
+
+On constate toutfois une chose lorsque l'on compare la table UsersTable et la AddressesTable. 
+Elles sont identiques, seul la définition de la table change.
+
+Pourquoi ne pas profiter de l'héritage de classe pour améliorer encore notre code ?
+
+Créons tout de suite une classe mère que l'on appelera Table.php. Nous indiquerons les propriétés et méthodes qui se
+trouvent dans la classe UsersTable. On remplacera la valeur $table = 'users' par table = null.
+
+```php
+<?php 
+class Table
+{
+     /**
+         * Instance de la classe Db
+         */ 
+        protected $db = null;
+        
+        /**
+         * Nom de la base de données
+         */
+        protected $table = null;
+        
+        
+        public function __construct($db) 
+        {
+            $this->db = $db;
+        }
+    
+        public function findAll ()
+        {
+            $pdo = $this->db->getPdo();
+            return $pdo->query(sprintf("SELECT * FROM %s", $this->table));
+        }
+}
+?>
+```
+
+Nous pouvons maintenant faire hériter nos classes UsersTable et AddressesTable de cette classe Table.
+Il nous restera à définir le nom de la table pour chaque classe.
+
+```php
+<?php
+
+class UsersTable extends Table
+{
+    protected $table = 'users';
+}
+
+class AddressesTable extends Table
+{
+    protected  $table = 'addresses';
+}
+
+?>
+```
+Nous avons 2 classes qui héritent de la même classe Table. Celle-ci contient les caractéristiques essentielles (génériques) d'une table.
+Nous pouvons maitenant écrire du code spécifique pour les classe UsersTable et AddressesTable.  
+
+#### En conclusion
+Dans cette dernière partie, nous avons réaliser de l'héritage de classe qui nous ouvre encore le champ des possibles et continue de garder
+un code propre et organisé. 
 
 
 

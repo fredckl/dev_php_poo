@@ -1,11 +1,11 @@
 <?php
 
 
-class UsersTable extends Table
+class AddressesTable
 {
     private $db = null;
 
-    private $table = 'users';
+    private $table = 'addresses';
 
     public function __construct ($db)
     {
